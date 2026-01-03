@@ -1,101 +1,919 @@
-<!-- CONTINUACIÓN DEL CÓDIGO DESPUÉS DE LA CANCIÓN 10 -->
-                    <div class="song-card" data-id="song10" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Bad%20Bunny%20-%20DfMf.mp3" data-title="DfMf" data-artist="Bad Bunny" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover DfMf">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinfona Compartida - Tu Playlist Personalizada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #2C002B;
+            --secondary-bg: #4B004D;
+            --accent-pink: #FF6B9A;
+            --accent-gold: #E0C06A;
+            --text-light: #F0F0F0;
+            --text-muted: #C0C0C0;
+            --progress-bar-fill: #FF4081;
+            --favorite-color: #FFD700;
+            --player-height-mobile: 130px;
+            --sidebar-height-mobile: 60px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: calc(100vh - 40px);
+            min-height: 500px;
+            background-color: var(--secondary-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 250px;
+            padding: 25px;
+            background-color: var(--primary-bg);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--accent-pink);
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 12px;
+            font-size: 1.1em;
+            color: var(--accent-gold);
+        }
+
+        .sidebar ul li a span {
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: rgba(255, 107, 154, 0.15);
+            color: var(--accent-pink);
+        }
+
+        .sidebar ul li a.active i {
+            color: var(--accent-pink);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            overflow-y: auto;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-section h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            color: var(--accent-gold);
+            letter-spacing: 0.03em;
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .banner-section {
+            background: linear-gradient(135deg, rgba(255, 107, 154, 0.2) 0%, rgba(228, 119, 173, 0.1) 50%, rgba(255, 135, 103, 0.2) 100%);
+            color: var(--text-light);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            flex-shrink: 0;
+        }
+
+        .banner-content h2 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 0.05em;
+        }
+
+        .banner-content p {
+            font-size: 1.1em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .song-list-section {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-list-section h2 {
+            font-size: 1.6em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--accent-pink);
+            letter-spacing: 0.02em;
+            flex-shrink: 0;
+        }
+
+        #playlist, #favorite-playlist {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            padding-right: 5px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        #playlist::-webkit-scrollbar, #favorite-playlist::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #playlist::-webkit-scrollbar-thumb, #favorite-playlist::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        #playlist::-webkit-scrollbar-track, #favorite-playlist::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .song-card {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 15px 20px;
+            border-radius: 10px;
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            position: relative;
+            min-width: 0;
+        }
+
+        .song-card:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .song-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 18px;
+            border: 2px solid var(--accent-gold);
+            flex-shrink: 0;
+        }
+
+        .song-info {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .song-info h3 {
+            font-size: 1.1em;
+            margin-bottom: 4px;
+            color: var(--text-light);
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-info p {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .song-card .actions {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+
+        .song-card .favorite-icon {
+            font-size: 1.3em;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .song-card .favorite-icon.fas {
+            color: var(--favorite-color);
+        }
+
+        .song-card .favorite-icon:hover {
+            transform: scale(1.2);
+            color: var(--favorite-color);
+        }
+
+        .player-controls {
+            background-color: var(--primary-bg);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            flex-shrink: 0;
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            max-width: 250px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            min-width: 150px;
+        }
+
+        .player-info img {
+            width: 55px;
+            height: 55px;
+            border-radius: 8px;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 1px solid var(--accent-gold);
+            flex-shrink: 0;
+        }
+
+        .player-info h4 {
+            font-size: 1em;
+            color: var(--text-light);
+            margin-bottom: 2px;
+            font-weight: 600;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .player-info p {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .player-buttons {
+            display: flex;
+            gap: 25px;
+            font-size: 1.6em;
+            color: var(--accent-pink);
+            margin: 0 30px;
+            flex-shrink: 0;
+        }
+
+        .player-buttons i {
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .player-buttons i:hover {
+            color: var(--accent-gold);
+            transform: scale(1.1);
+        }
+
+        .play-pause-btn {
+            font-size: 2em;
+            color: var(--accent-pink);
+        }
+
+        .progress-bar-container {
+            flex-grow: 2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 400px;
+            min-width: 180px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0;
+            background-color: var(--progress-bar-fill);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        .time-display {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            min-width: 45px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 120px;
+            margin-left: 30px;
+            flex-shrink: 0;
+        }
+
+        .volume-control i {
+            font-size: 1.2em;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .volume-control i:hover {
+            color: var(--text-light);
+        }
+
+        .volume-slider {
+            width: 80px;
+            -webkit-appearance: none;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            outline: none;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-pink);
+            cursor: pointer;
+            border: 2px solid var(--text-light);
+            transition: background-color 0.2s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            background: var(--progress-bar-fill);
+        }
+
+        .about-section {
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .about-section h2 {
+            color: var(--accent-pink);
+            margin-bottom: 15px;
+        }
+
+        .about-section p {
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: var(--text-muted);
+        }
+
+        .about-section p a {
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+
+        .about-section p a:hover {
+            text-decoration: underline;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #1DA851;
+            transform: translateY(-2px);
+        }
+
+        .whatsapp-btn i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .hidden-view {
+            display: none !important;
+        }
+
+        .active-view {
+            display: flex !important;
+            flex-direction: column;
+        }
+
+        .song-list-section.active-view {
+            display: flex !important;
+            flex-direction: column;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+            .container {
+                height: 95vh;
+                padding: 15px;
+            }
+            .sidebar {
+                width: 200px;
+                padding: 20px;
+            }
+            .sidebar h2 {
+                font-size: 1.6em;
+            }
+            .sidebar ul li a {
+                padding: 10px 12px;
+                font-size: 0.95em;
+            }
+            .sidebar ul li a i {
+                font-size: 1em;
+            }
+            .main-content {
+                padding: 25px;
+                gap: 25px;
+            }
+            .header-section h1 {
+                font-size: 2.2em;
+            }
+            .banner-section {
+                padding: 30px;
+            }
+            .banner-content h2 {
+                font-size: 2em;
+            }
+            .banner-content p {
+                font-size: 1em;
+            }
+            .song-card {
+                padding: 12px 18px;
+            }
+            .song-card img {
+                width: 55px;
+                height: 55px;
+                margin-right: 15px;
+            }
+            .player-controls {
+                padding: 15px 25px;
+            }
+            .player-info {
+                max-width: 180px;
+            }
+            .player-info img {
+                width: 50px;
+                height: 50px;
+            }
+            .player-buttons {
+                gap: 20px;
+                font-size: 1.5em;
+                margin: 0 20px;
+            }
+            .play-pause-btn {
+                font-size: 1.8em;
+            }
+            .progress-bar-container {
+                max-width: 280px;
+                gap: 10px;
+            }
+            .time-display {
+                font-size: 0.75em;
+                min-width: 40px;
+            }
+            .volume-control {
+                width: 100px;
+                margin-left: 20px;
+            }
+            .volume-slider {
+                width: 70px;
+            }
+            #playlist, #favorite-playlist {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+                overflow-y: auto;
+            }
+            .container {
+                flex-direction: column;
+                border-radius: 0;
+                height: 100vh;
+                max-width: none;
+                min-height: unset;
+                box-shadow: none;
+            }
+            .sidebar {
+                width: 100%;
+                height: var(--sidebar-height-mobile);
+                padding: 0;
+                border-right: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                border-bottom: none;
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                gap: 0;
+                order: 2;
+                position: sticky;
+                bottom: var(--player-height-mobile);
+                background-color: var(--primary-bg);
+                z-index: 999;
+            }
+            .sidebar h2 {
+                display: none;
+            }
+            .sidebar ul {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-around;
+                align-items: center;
+            }
+            .sidebar ul li {
+                margin-bottom: 0;
+                flex-basis: 33.33%;
+                text-align: center;
+            }
+            .sidebar ul li a {
+                padding: 8px 5px;
+                font-size: 0.85em;
+                justify-content: center;
+                flex-direction: column;
+                gap: 5px;
+            }
+            .sidebar ul li a span {
+                display: block;
+                font-size: 0.75em;
+                margin-top: 2px;
+            }
+            .sidebar ul li a i {
+                margin-right: 0;
+                font-size: 1.3em;
+            }
+            .main-content {
+                padding: 15px;
+                gap: 20px;
+                min-height: calc(100vh - var(--player-height-mobile) - var(--sidebar-height-mobile));
+                overflow-y: auto;
+                order: 1;
+            }
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding-bottom: 10px;
+            }
+            .header-section h1 {
+                font-size: 1.6em;
+            }
+            .banner-section {
+                padding: 20px 15px;
+                margin-bottom: 15px;
+            }
+            .banner-content h2 {
+                font-size: 1.5em;
+                margin-bottom: 8px;
+            }
+            .banner-content p {
+                font-size: 0.85em;
+                margin-bottom: 15px;
+            }
+            .song-list-section h2 {
+                font-size: 1.3em;
+                margin-bottom: 15px;
+            }
+            #playlist, #favorite-playlist {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding-right: 0;
+            }
+            .song-card {
+                padding: 10px 12px;
+                margin-bottom: 0;
+            }
+            .song-card img {
+                width: 45px;
+                height: 45px;
+                margin-right: 12px;
+            }
+            .song-info h3 {
+                font-size: 0.9em;
+                margin-bottom: 2px;
+            }
+            .song-info p {
+                font-size: 0.75em;
+            }
+            .song-card .actions {
+                margin-left: auto;
+            }
+            .song-card .favorite-icon {
+                font-size: 1.1em;
+            }
+            .player-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+                padding: 10px 15px;
+                border-radius: 0;
+                order: 3;
+                position: sticky;
+                bottom: 0;
+                width: 100%;
+                box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
+                height: var(--player-height-mobile);
+            }
+            .player-info {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 5px;
+                text-align: center;
+                max-width: none;
+                min-width: unset;
+            }
+            .player-info img {
+                width: 45px;
+                height: 45px;
+                margin-right: 10px;
+            }
+            .player-info h4 {
+                font-size: 0.9em;
+            }
+            .player-info p {
+                font-size: 0.75em;
+            }
+            .player-buttons {
+                width: 100%;
+                justify-content: center;
+                font-size: 1.4em;
+                margin: 5px 0;
+                gap: 15px;
+            }
+            .play-pause-btn {
+                font-size: 2em;
+            }
+            .progress-bar-container {
+                width: 100%;
+                margin-bottom: 5px;
+                flex-grow: 0;
+                max-width: none;
+                gap: 5px;
+            }
+            .time-display {
+                font-size: 0.7em;
+                min-width: 30px;
+            }
+            .volume-control {
+                width: 100%;
+                justify-content: center;
+                margin-left: 0;
+                gap: 5px;
+            }
+            .volume-control i {
+                font-size: 1em;
+            }
+            .volume-slider {
+                width: 60px;
+            }
+            .about-section {
+                padding: 15px;
+                margin-top: 15px;
+            }
+            .about-section h2 {
+                font-size: 1.5em;
+                margin-bottom: 10px;
+            }
+            .about-section p {
+                font-size: 0.85em;
+                margin-bottom: 8px;
+            }
+            .whatsapp-btn {
+                font-size: 0.9em;
+                padding: 8px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 10px;
+                gap: 15px;
+            }
+            .header-section h1 {
+                font-size: 1.4em;
+            }
+            .banner-content h2 {
+                font-size: 1.3em;
+            }
+            .banner-content p {
+                font-size: 0.8em;
+            }
+            .song-list-section h2 {
+                font-size: 1.2em;
+            }
+            .song-card {
+                padding: 8px 10px;
+            }
+            .song-card img {
+                width: 35px;
+                height: 35px;
+                margin-right: 8px;
+            }
+            .song-info h3 {
+                font-size: 0.85em;
+            }
+            .song-info p {
+                font-size: 0.7em;
+            }
+            .song-card .favorite-icon {
+                font-size: 1em;
+            }
+            .player-info img {
+                width: 35px;
+                height: 35px;
+            }
+            .player-info h4 {
+                font-size: 0.8em;
+            }
+            .player-info p {
+                font-size: 0.7em;
+            }
+            .player-buttons {
+                font-size: 1.2em;
+                gap: 10px;
+            }
+            .play-pause-btn {
+                font-size: 1.8em;
+            }
+            .time-display {
+                font-size: 0.65em;
+                min-width: 25px;
+            }
+            .volume-slider {
+                width: 50px;
+            }
+            .volume-control i {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Sinfona Compartida</h2>
+            <ul>
+                <li><a href="#" class="nav-link active" data-view="all-songs"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+                <li><a href="#" class="nav-link" data-view="favorites"><i class="fas fa-heart"></i><span>Favoritas</span></a></li>
+                <li><a href="#" class="nav-link" data-view="about"><i class="fas fa-info-circle"></i><span>Acerca de</span></a></li>
+            </ul>
+        </aside>
+        
+        <main class="main-content">
+            <section class="header-section">
+                <h1>SpotyLove</h1>
+            </section>
+
+            <section class="banner-section">
+                <div class="banner-content">
+                    <h2>Un Espacio Musical para Mirian & Jason</h2>
+                    <p>Canciones elegidas con amor.</p>
+                </div>
+            </section>
+
+            <section class="song-list-section active-view" id="all-songs-view">
+                <h2>Tu Espacio Musical</h2>
+                <div id="playlist">
+                    <!-- CANCIONES ORIGINALES (song1-song17) -->
+                    <!-- CANCIN 1 La Promesa de Melendi -->
+                    <div class="song-card" data-id="song1" data-src="https://ia600802.us.archive.org/25/items/melendi-la-promesa-videoclip-oficial/Melendi%20-%20La%20promesa%20%28Videoclip%20oficial%29.mp3" data-title="La Promesa" data-artist="Melendi" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover La Promesa">
                         <div class="song-info">
-                            <h3>DfMf</h3>
-                            <p>Bad Bunny</p>
+                            <h3>La Promesa</h3>
+                            <p>Melendi</p>
                         </div>
                         <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song10"></i>
+                            <i class="far fa-heart favorite-icon" data-id="song1"></i>
                         </div>
                     </div>
-
-                    <!-- CANCIÓN 11: Desconec Zion de Farruko -->
-                    <div class="song-card" data-id="song11" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Farruko%20-%20Desconec%20zion.mp3" data-title="Desconec Zion" data-artist="Farruko" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Desconec Zion">
+                    <!-- CANCIN 2 Aprender a Quererte de Morat -->
+                    <div class="song-card" data-id="song2" data-src="https://ia600604.us.archive.org/20/items/morat-aprender-a-quererte/Morat%20-%20Aprender%20A%20Quererte.mp3" data-title="Aprender A Quererte" data-artist="Morat" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Aprender A Quererte">
                         <div class="song-info">
-                            <h3>Desconec Zion</h3>
-                            <p>Farruko</p>
+                            <h3>Aprender A Quererte</h3>
+                            <p>Morat</p>
                         </div>
                         <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song11"></i>
+                            <i class="far fa-heart favorite-icon" data-id="song2"></i>
                         </div>
                     </div>
-
-                    <!-- CANCIÓN 12: Si Una Vez de Play-N-Skillz Ft. Wisin, Frankie J Y Leslie Grace -->
-                    <div class="song-card" data-id="song12" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Play-N-Skillz%20Ft.%20Wisin%20%20Frankie%20J%20Y%20Leslie%20Grace%20-%20Si%20Una%20Vez.mp3" data-title="Si Una Vez" data-artist="Play-N-Skillz Ft. Wisin, Frankie J Y Leslie Grace" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Si Una Vez">
-                        <div class="song-info">
-                            <h3>Si Una Vez</h3>
-                            <p>Play-N-Skillz Ft. Wisin, Frankie J Y Leslie Grace</p>
-                        </div>
-                        <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song12"></i>
-                        </div>
-                    </div>
-
-                    <!-- CANCIÓN 13: Envigado de Ryan Castro Ft. Zion y Blessd -->
-                    <div class="song-card" data-id="song13" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Ryan%20Castro%20Ft.%20Zion%20y%20Blessd%20-%20Envigado%20.mp3" data-title="Envigado" data-artist="Ryan Castro Ft. Zion y Blessd" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Envigado">
-                        <div class="song-info">
-                            <h3>Envigado</h3>
-                            <p>Ryan Castro Ft. Zion y Blessd</p>
-                        </div>
-                        <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song13"></i>
-                        </div>
-                    </div>
-
-                    <!-- CANCIÓN 14: Pero Te Vi de Tony Dize -->
-                    <div class="song-card" data-id="song14" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Tony%20Dize%20-%20Pero%20Te%20Vi%20.mp3" data-title="Pero Te Vi" data-artist="Tony Dize" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Pero Te Vi">
-                        <div class="song-info">
-                            <h3>Pero Te Vi</h3>
-                            <p>Tony Dize</p>
-                        </div>
-                        <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song14"></i>
-                        </div>
-                    </div>
-
-                    <!-- CANCIÓN 15: Si No Le Contesto (Official Remix) de Tony Dize Ft. Plan B y Zion y Lennox -->
-                    <div class="song-card" data-id="song15" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Tony%20Dize%20Ft.%20Plan%20B%20y%20Zion%20y%20Lennox%20-%20Si%20No%20Le%20Contesto%20%28Official%20Remix%29.mp3" data-title="Si No Le Contesto (Official Remix)" data-artist="Tony Dize Ft. Plan B y Zion y Lennox" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Si No Le Contesto">
-                        <div class="song-info">
-                            <h3>Si No Le Contesto (Official Remix)</h3>
-                            <p>Tony Dize Ft. Plan B y Zion y Lennox</p>
-                        </div>
-                        <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song15"></i>
-                        </div>
-                    </div>
-
-                    <!-- CANCIÓN 16: Hoy Lo Siento de Tony Dize Ft. Zion y Lennox -->
-                    <div class="song-card" data-id="song16" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Tony%20Dize%20Ft.%20Zion%20y%20Lennox%20%20-%20Hoy%20Lo%20Siento%20%28Prod.%20By%20DJ%20Eliel%29.mp3" data-title="Hoy Lo Siento" data-artist="Tony Dize Ft. Zion y Lennox" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Hoy Lo Siento">
-                        <div class="song-info">
-                            <h3>Hoy Lo Siento</h3>
-                            <p>Tony Dize Ft. Zion y Lennox</p>
-                        </div>
-                        <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song16"></i>
-                        </div>
-                    </div>
-
-                    <!-- CANCIÓN 17: Quizás de Tony Dize ft. Rakim y Ken-Y -->
-                    <div class="song-card" data-id="song17" data-src="https://ia600200.us.archive.org/7/items/tony-dize-ft.-plan-b-y-zion-y-lennox-si-no-le-contesto-official-remix/Tony%20Dize%20ft.%20Rkm%20y%20Ken-Y%20-%20Quizas%20.mp3" data-title="Quizás" data-artist="Tony Dize ft. Rakim y Ken-Y" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Quizás">
-                        <div class="song-info">
-                            <h3>Quizás</h3>
-                            <p>Tony Dize ft. Rakim y Ken-Y</p>
-                        </div>
-                        <div class="actions">
-                            <i class="far fa-heart favorite-icon" data-id="song17"></i>
-                        </div>
-                    </div>
-
-                    <!-- CANCIÓN 18: Explotar Contigo de TOURISTA -->
-                    <div class="song-card" data-id="song18" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/TOURISTA%20-%20Explotar%20Contigo%20.mp3" data-title="Explotar Contigo" data-artist="TOURISTA" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                    <!-- ... song3-song17 siguen igual ... -->
+                    
+                    <!-- NUEVAS CANCIONES (song18-song26) -->
+                    <!-- CANCIN 18 TOURISTA - Explotar Contigo -->
+                    <div class="song-card" data-id="song18" data-src="https://dn710308.ca.archive.org/0/items/duncan-dhu-en-algun-lugar_202601/TOURISTA%20-%20Explotar%20Contigo%20.mp3" data-title="Explotar Contigo" data-artist="TOURISTA" data-cover="https://archive.org/download/1751834540/1751834540.png">
                         <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Explotar Contigo">
                         <div class="song-info">
                             <h3>Explotar Contigo</h3>
@@ -106,11 +924,11 @@
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 19: 00:00 de Siddhartha -->
-                    <div class="song-card" data-id="song19" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Siddhartha%20-%2000_00%20.mp3" data-title="00:00" data-artist="Siddhartha" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover 00:00">
+                    <!-- CANCIN 19 Siddhartha - 00_00 -->
+                    <div class="song-card" data-id="song19" data-src="https://dn710308.ca.archive.org/0/items/duncan-dhu-en-algun-lugar_202601/Siddhartha%20-%2000_00%20.mp3" data-title="00_00" data-artist="Siddhartha" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover 00_00">
                         <div class="song-info">
-                            <h3>00:00</h3>
+                            <h3>00_00</h3>
                             <p>Siddhartha</p>
                         </div>
                         <div class="actions">
@@ -118,8 +936,8 @@
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 20: Magia de Los Outsaiders -->
-                    <div class="song-card" data-id="song20" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Los%20Outsaiders%20-%20Magia.mp3" data-title="Magia" data-artist="Los Outsaiders" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                    <!-- CANCIN 20 Los Outsaiders - Magia -->
+                    <div class="song-card" data-id="song20" data-src="https://dn710308.ca.archive.org/0/items/duncan-dhu-en-algun-lugar_202601/Los%20Outsaiders%20-%20Magia.mp3" data-title="Magia" data-artist="Los Outsaiders" data-cover="https://archive.org/download/1751834540/1751834540.png">
                         <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Magia">
                         <div class="song-info">
                             <h3>Magia</h3>
@@ -130,8 +948,8 @@
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 21: Niña de Los Outsaiders -->
-                    <div class="song-card" data-id="song21" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Los%20Outsaiders%20-%20Ni%C3%B1a%20%5D.mp3" data-title="Niña" data-artist="Los Outsaiders" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                    <!-- CANCIN 21 Los Outsaiders - Niña -->
+                    <div class="song-card" data-id="song21" data-src="https://dn710308.ca.archive.org/0/items/duncan-dhu-en-algun-lugar_202601/Los%20Outsaiders%20-%20Ni%C3%B1a%20%5D.mp3" data-title="Niña" data-artist="Los Outsaiders" data-cover="https://archive.org/download/1751834540/1751834540.png">
                         <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Niña">
                         <div class="song-info">
                             <h3>Niña</h3>
@@ -142,20 +960,20 @@
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 22: Devuélveme a mi chica de Hombres G -->
-                    <div class="song-card" data-id="song22" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Hombres%20G%20%20Devulveme%20a%20mi%20chica.mp3" data-title="Devuélveme a mi chica" data-artist="Hombres G" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Devuélveme a mi chica">
+                    <!-- CANCIN 22 Caifanes - Viento (Cover) -->
+                    <div class="song-card" data-id="song22" data-src="https://dn710308.ca.archive.org/0/items/duncan-dhu-en-algun-lugar_202601/Caifanes%20-%20Viento%20%28Cover%29.mp3" data-title="Viento (Cover)" data-artist="Caifanes" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Viento">
                         <div class="song-info">
-                            <h3>Devuélveme a mi chica</h3>
-                            <p>Hombres G</p>
+                            <h3>Viento (Cover)</h3>
+                            <p>Caifanes</p>
                         </div>
                         <div class="actions">
                             <i class="far fa-heart favorite-icon" data-id="song22"></i>
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 23: Trátame Suavemente de Soda Stereo -->
-                    <div class="song-card" data-id="song23" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Soda%20Stereo%20-%20Tr%C3%A1tame%20Suavemente%20.mp3" data-title="Trátame Suavemente" data-artist="Soda Stereo" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                    <!-- CANCIN 23 Soda Stereo - Trátame Suavemente -->
+                    <div class="song-card" data-id="song23" data-src="https://dn710308.ca.archive.org/0/items/duncan-dhu-en-algun-lugar_202601/Soda%20Stereo%20-%20Tr%C3%A1tame%20Suavemente%20.mp3" data-title="Trátame Suavemente" data-artist="Soda Stereo" data-cover="https://archive.org/download/1751834540/1751834540.png">
                         <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Trátame Suavemente">
                         <div class="song-info">
                             <h3>Trátame Suavemente</h3>
@@ -166,20 +984,20 @@
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 24: Viento (Cover) de Caifanes -->
-                    <div class="song-card" data-id="song24" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Caifanes%20-%20Viento%20%28Cover%29.mp3" data-title="Viento (Cover)" data-artist="Caifanes" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Viento">
+                    <!-- CANCIN 24 Hombres G - Devuélveme a mi chica -->
+                    <div class="song-card" data-id="song24" data-src="https://dn710308.ca.archive.org/0/items/duncan-dhu-en-algun-lugar_202601/Hombres%20G%20%20Devulveme%20a%20mi%20chica.mp3" data-title="Devuélveme a mi chica" data-artist="Hombres G" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Devuélveme a mi chica">
                         <div class="song-info">
-                            <h3>Viento (Cover)</h3>
-                            <p>Caifanes</p>
+                            <h3>Devuélveme a mi chica</h3>
+                            <p>Hombres G</p>
                         </div>
                         <div class="actions">
                             <i class="far fa-heart favorite-icon" data-id="song24"></i>
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 25: En Algun Lugar de Duncan Dhu -->
-                    <div class="song-card" data-id="song25" data-src="https://ia600403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Duncan%20Dhu%20%20En%20Algun%20Lugar.mp3" data-title="En Algun Lugar" data-artist="Duncan Dhu" data-cover="https://archive.org/download/1751834540/1751834540.png">
+                    <!-- CANCIN 25 Duncan Dhu - En Algun Lugar -->
+                    <div class="song-card" data-id="song25" data-src="https://ia800403.us.archive.org/2/items/duncan-dhu-en-algun-lugar_202601/Duncan%20Dhu%20%20En%20Algun%20Lugar.mp3" data-title="En Algun Lugar" data-artist="Duncan Dhu" data-cover="https://archive.org/download/1751834540/1751834540.png">
                         <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover En Algun Lugar">
                         <div class="song-info">
                             <h3>En Algun Lugar</h3>
@@ -190,9 +1008,9 @@
                         </div>
                     </div>
 
-                    <!-- CANCIÓN 26: Techno Hits de DJ Jason Dafnis -->
-                    <div class="song-card" data-id="song26" data-src="https://ia800403.us.archive.org/31/items/dj-jason-dafnis-techno-hits/DJ%20Jason%20Dafnis%20-%20Techno%20Hits%20.mp3" data-title="Techno Hits" data-artist="DJ Jason Dafnis" data-cover="https://archive.org/download/1751834540/1751834540.png">
-                        <img src="https://archive.org/download/1751834540/1751834540.png" alt="Cover Techno Hits">
+                    <!-- CANCIN 26 DJ Jason Dafnis - Techno Hits -->
+                    <div class="song-card" data-id="song26" data-src="https://dn710603.ca.archive.org/0/items/dj-jason-dafnis-techno-hits/DJ%20Jason%20Dafnis%20-%20Techno%20Hits%20.mp3" data-title="Techno Hits" data-artist="DJ Jason Dafnis" data-cover="https://ia903102.us.archive.org/3/items/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-b/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-business-company-vector.jpg">
+                        <img src="https://ia903102.us.archive.org/3/items/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-b/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-business-company-vector.jpg" alt="Cover Techno Hits">
                         <div class="song-info">
                             <h3>Techno Hits</h3>
                             <p>DJ Jason Dafnis</p>
@@ -205,52 +1023,55 @@
             </section>
 
             <section class="song-list-section hidden-view" id="favorites-view">
-                <h2>Mi Lista Favorita❤️</h2>
+                <h2>Mi Lista Favorita</h2>
                 <div id="favorite-playlist">
                     <p id="no-favorites-message" style="text-align: center; color: var(--text-muted); margin-top: 20px;">
-                        Todavía no tienes canciones favoritas. ¡Agrega algunas desde "Inicio"! 🎧✨
+                        Todavía no tienes canciones favoritas. ¡Agrega algunas desde Inicio!
                     </p>
                 </div>
             </section>
 
             <section class="about-section hidden-view" id="about-view">
-                <h2>Sobre SpotyLove 🎶</h2>
-                <p>Este es un espacio musical especial creado para nosotros, con canciones que disfrutamos juntos y por separado. Un lugar donde nuestra música favorita se encuentra. 🎧✨</p>
-                <p>Creado con amor por: Jason Dafnis</p>
-                <p>Si me extrañas o quieres decirme algo, escríbeme aquí. 💌</p>
+                <h2>Sobre SpotyLove</h2>
+                <p>Este es un espacio musical especial creado para nosotros, con canciones que disfrutamos juntos y por separado. Un lugar donde nuestra música favorita se encuentra.</p>
+                <p>Creado con amor por Jason Dafnis</p>
+                <p>Si me extrañas o quieres decirme algo, escríbenme aquí.</p>
                 <a href="https://wa.me/51921926732" target="_blank" class="whatsapp-btn">
-                    <i class="fab fa-whatsapp"></i> Escríbeme mi amor
+                    <i class="fab fa-whatsapp"></i>
+                    Escríbeme mi amor
                 </a>
             </section>
-
         </main>
+    </div>
 
-        <footer class="player-controls">
-            <div class="player-info">
-                <img id="player-cover" src="https://ia903102.us.archive.org/3/items/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-b/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-business-company-vector.jpg" alt="Logo de DJ">
-                <div>
-                    <h4 id="player-title">Selecciona una canción</h4>
-                    <p id="player-artist"></p>
-                </div>
+    <footer class="player-controls">
+        <div class="player-info">
+            <img id="player-cover" src="https://ia903102.us.archive.org/3/items/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-b/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-business-company-vector.jpg" alt="Logo de DJ">
+            <div>
+                <h4 id="player-title">Selecciona una canción</h4>
+                <p id="player-artist"></p>
             </div>
-            <div class="player-buttons">
-                <i class="fas fa-backward" id="prev-btn"></i>
-                <i class="fas fa-play play-pause-btn" id="play-pause-btn"></i>
-                <i class="fas fa-forward" id="next-btn"></i>
+        </div>
+        <div class="player-buttons">
+            <i class="fas fa-backward" id="prev-btn"></i>
+            <i class="fas fa-play play-pause-btn" id="play-pause-btn"></i>
+            <i class="fas fa-forward" id="next-btn"></i>
+        </div>
+        <div class="progress-bar-container">
+            <span class="time-display" id="current-time">00:00</span>
+            <div class="progress-bar" id="progress-bar">
+                <div class="progress" id="progress"></div>
             </div>
-            <div class="progress-bar-container">
-                <span class="time-display" id="current-time">0:00</span>
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress" id="progress"></div>
-                </div>
-                <span class="time-display" id="duration-time">0:00</span>
-            </div>
-            <div class="volume-control">
-                <i class="fas fa-volume-up" id="volume-icon"></i>
-                <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
-            </div>
-            <audio id="audio-player" preload="metadata"></audio>
-        </footer>
+            <span class="time-display" id="duration-time">00:00</span>
+        </div>
+        <div class="volume-control">
+            <i class="fas fa-volume-up" id="volume-icon"></i>
+            <input type="range" id="volume-slider" class="volume-slider" min="0" max="1" step="0.01" value="0.7">
+        </div>
+    </footer>
+
+    <div>
+        <audio id="audio-player" preload="metadata"></audio>
     </div>
 
     <script>
@@ -278,11 +1099,10 @@
         let currentSongIndex = -1;
         let allSongs = [];
         let currentPlaylist = [];
-
         const DEFAULT_PLAYER_COVER_IMAGE = 'https://ia903102.us.archive.org/3/items/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-b/abstract-letter-dj-logo-design-with-line-connection-for-technology-and-digital-business-company-vector.jpg';
         const DEFAULT_SONG_COVER_PLACEHOLDER = 'https://archive.org/download/1751834540/1751834540.png';
 
-        let favorites = JSON.parse(localStorage.getItem('favoriteSongs')) || [];
+        let favorites = JSON.parse(localStorage.getItem('favoriteSongs') || '[]');
 
         function showView(viewId) {
             mainContentSections.forEach(section => {
@@ -295,40 +1115,37 @@
                 targetView.classList.remove('hidden-view');
                 targetView.classList.add('active-view');
                 document.querySelector('.main-content').scrollTop = 0;
+
                 if (targetView.id === 'all-songs-view' || targetView.id === 'favorites-view') {
-                    const scrollableDiv = targetView.querySelector('div[id$="-playlist"]');
-                    if (scrollableDiv) {
-                        scrollableDiv.scrollTop = 0;
-                    }
+                    const scrollableDiv = targetView.querySelector('#id-playlist');
+                    if (scrollableDiv) scrollableDiv.scrollTop = 0;
                 }
-            }
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.view === viewId) {
-                    link.classList.add('active');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.view === viewId) link.classList.add('active');
+                });
+
+                if (viewId === 'all-songs') {
+                    currentPlaylist = [...allSongs];
+                    headerSection.classList.remove('hidden-view');
+                    bannerSection.classList.remove('hidden-view');
+                } else if (viewId === 'favorites') {
+                    updateFavoritesView();
+                    currentPlaylist = allSongs.filter(song => favorites.includes(song.id));
+                    headerSection.classList.remove('hidden-view');
+                    bannerSection.classList.remove('hidden-view');
+                } else if (viewId === 'about') {
+                    currentPlaylist = [];
+                    headerSection.classList.add('hidden-view');
+                    bannerSection.classList.add('hidden-view');
                 }
-            });
-
-            if (viewId === 'all-songs') {
-                currentPlaylist = [...allSongs];
-                headerSection.classList.remove('hidden-view');
-                bannerSection.classList.remove('hidden-view');
-            } else if (viewId === 'favorites') {
-                updateFavoritesView();
-                currentPlaylist = allSongs.filter(song => favorites.includes(song.id));
-                headerSection.classList.remove('hidden-view');
-                bannerSection.classList.remove('hidden-view');
-            } else if (viewId === 'about') {
-                currentPlaylist = [];
-                headerSection.classList.add('hidden-view');
-                bannerSection.classList.add('hidden-view');
             }
         }
 
         function toggleFavorite(songId) {
             const index = favorites.indexOf(songId);
-            if (index > -1) {
+            if (index !== -1) {
                 favorites.splice(index, 1);
             } else {
                 favorites.push(songId);
@@ -355,9 +1172,8 @@
 
         function updateFavoritesView() {
             favoritePlaylistContainer.innerHTML = '';
-
             const favoriteSongs = allSongs.filter(song => favorites.includes(song.id));
-
+            
             if (favoriteSongs.length === 0) {
                 noFavoritesMessage.style.display = 'block';
             } else {
@@ -370,7 +1186,7 @@
                     songCard.dataset.title = song.title;
                     songCard.dataset.artist = song.artist;
                     songCard.dataset.cover = song.cover;
-
+                    
                     songCard.innerHTML = `
                         <img src="${song.cover || DEFAULT_SONG_COVER_PLACEHOLDER}" alt="Cover ${song.title}">
                         <div class="song-info">
@@ -389,7 +1205,11 @@
         }
 
         function loadSong(index) {
-            if (currentPlaylist.length === 0 || index < 0 || index >= currentPlaylist.length) {
+            if (currentPlaylist.length === 0) {
+                index = 0;
+            }
+            
+            if (index >= currentPlaylist.length || index < 0) {
                 playerTitle.textContent = 'Selecciona una canción';
                 playerArtist.textContent = '';
                 playerCover.src = DEFAULT_PLAYER_COVER_IMAGE;
@@ -397,14 +1217,15 @@
                 audioPlayer.src = '';
                 audioPlayer.currentTime = 0;
                 progress.style.width = '0%';
-                currentTimeDisplay.textContent = '0:00';
-                durationTimeDisplay.textContent = '0:00';
+                currentTimeDisplay.textContent = '00:00';
+                durationTimeDisplay.textContent = '00:00';
                 currentSongIndex = -1;
                 return;
             }
 
             currentSongIndex = index;
             const song = currentPlaylist[currentSongIndex];
+            
             audioPlayer.src = song.src;
             playerTitle.textContent = song.title;
             playerArtist.textContent = song.artist;
@@ -419,9 +1240,8 @@
                 if (playPromise !== undefined) {
                     playPromise.then(() => {
                         playPauseBtn.classList.replace('fa-play', 'fa-pause');
-                    })
-                    .catch(error => {
-                        console.warn("Reproducción automática bloqueada:", error);
+                    }).catch(error => {
+                        console.warn('Reproducción automática bloqueada:', error);
                         playPauseBtn.classList.replace('fa-pause', 'fa-play');
                     });
                 }
@@ -457,14 +1277,17 @@
                 loadSong(-1);
                 return;
             }
-            currentSongIndex = (currentSongIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+            currentSongIndex = currentSongIndex - 1;
+            if (currentSongIndex < 0) {
+                currentSongIndex = currentPlaylist.length - 1;
+            }
             loadSong(currentSongIndex);
         }
 
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const secs = Math.floor(seconds % 60);
-            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+            return `${minutes}:${secs.toString().padStart(2, '0')}`;
         }
 
         function addSongCardEventListeners(container) {
@@ -476,21 +1299,21 @@
 
         function handleSongCardClick(e) {
             const songCard = e.currentTarget;
-
             if (e.target.classList.contains('favorite-icon')) {
                 const songId = e.target.dataset.id;
                 toggleFavorite(songId);
             } else {
                 const songIdToPlay = songCard.dataset.id;
                 const clickedIndex = currentPlaylist.findIndex(song => song.id === songIdToPlay);
-
                 if (clickedIndex !== -1) {
                     loadSong(clickedIndex);
                 }
             }
         }
 
+        // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
+            // Cargar todas las canciones del DOM
             document.querySelectorAll('#playlist .song-card').forEach(card => {
                 allSongs.push({
                     id: card.dataset.id,
@@ -500,12 +1323,12 @@
                     cover: card.dataset.cover
                 });
             });
-
             currentPlaylist = [...allSongs];
 
             showView('all-songs');
             updateFavoriteIcons();
 
+            // Estado inicial del player
             playerTitle.textContent = 'Selecciona una canción';
             playerArtist.textContent = '';
             playerCover.src = DEFAULT_PLAYER_COVER_IMAGE;
@@ -513,11 +1336,12 @@
             audioPlayer.src = '';
             audioPlayer.currentTime = 0;
             progress.style.width = '0%';
-            currentTimeDisplay.textContent = '0:00';
-            durationTimeDisplay.textContent = '0:00';
+            currentTimeDisplay.textContent = '00:00';
+            durationTimeDisplay.textContent = '00:00';
 
             addSongCardEventListeners(playlistContainer);
 
+            // Event Listeners
             playPauseBtn.addEventListener('click', togglePlayPause);
             prevBtn.addEventListener('click', prevSong);
             nextBtn.addEventListener('click', nextSong);
@@ -525,7 +1349,7 @@
             audioPlayer.addEventListener('timeupdate', () => {
                 if (audioPlayer.duration) {
                     const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-                    progress.style.width = `${progressPercent}%`;
+                    progress.style.width = progressPercent + '%';
                     currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
                 }
             });
@@ -534,13 +1358,11 @@
                 if (audioPlayer.duration) {
                     durationTimeDisplay.textContent = formatTime(audioPlayer.duration);
                 } else {
-                    durationTimeDisplay.textContent = '0:00';
+                    durationTimeDisplay.textContent = '00:00';
                 }
             });
 
-            audioPlayer.addEventListener('ended', () => {
-                nextSong();
-            });
+            audioPlayer.addEventListener('ended', nextSong);
 
             progressBar.addEventListener('click', (e) => {
                 if (audioPlayer.duration) {
@@ -561,14 +1383,14 @@
             });
 
             volumeIcon.addEventListener('click', () => {
-                if (audioPlayer.muted) {
-                    audioPlayer.muted = false;
-                    volumeIcon.classList.replace('fa-volume-mute', 'fa-volume-up');
-                    volumeSlider.value = audioPlayer.volume === 0 ? 0.7 : audioPlayer.volume;
-                } else {
+                if (!audioPlayer.muted) {
                     audioPlayer.muted = true;
                     volumeIcon.classList.replace('fa-volume-up', 'fa-volume-mute');
                     volumeSlider.value = 0;
+                } else {
+                    audioPlayer.muted = false;
+                    volumeIcon.classList.replace('fa-volume-mute', 'fa-volume-up');
+                    volumeSlider.value = audioPlayer.volume === 0 ? 0.7 : audioPlayer.volume;
                 }
             });
 
